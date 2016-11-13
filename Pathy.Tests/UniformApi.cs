@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -158,11 +159,10 @@ namespace Pathy.Tests
             {
                 var invariantMethod = type.GetMethod("Invariant", BindingFlags.DeclaredOnly | BindingFlags.NonPublic | BindingFlags.Instance);
 
-#if DEBUG
-                Assert.NotNull(invariantMethod);
-#else
-                Assert.Null(invariantMethod);
-#endif
+                var condition = invariantMethod.GetCustomAttribute<ConditionalAttribute>();
+
+                Assert.NotNull(condition);
+                Assert.Equal("DEBUG", condition.ConditionString);
             }
         }
 
