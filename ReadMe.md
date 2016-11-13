@@ -64,5 +64,9 @@ Logical sorting is not the default since its behaviour may change, so it should 
 
 
 
-> :information_source:This feature is also powered by Windows, so matches what you see in `explorer.exe`.
+> :information_source: This feature is also powered by Windows, so matches what you see in `explorer.exe`.
 
+
+## TODO
+
+Relative paths are not normalized, so comparing them can have inconsistent results.
