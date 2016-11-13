@@ -1,4 +1,5 @@
-# Pathy
+# Pathy [![Build status](https://ci.appveyor.com/api/projects/status/awr5tpw9n1wj17ax?svg=true)](https://ci.appveyor.com/project/Porges/pathy)
+
 
 Pathy is a library for safe, typed path manipulation.
 
