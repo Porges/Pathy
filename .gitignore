@@ -4,4 +4,6 @@ packages/
 bin/
 obj/
 
+TestResults/
+
 *.swp
