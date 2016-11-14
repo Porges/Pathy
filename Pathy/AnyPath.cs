@@ -26,7 +26,7 @@ namespace Pathy
 
         // TODO: consider the Linux
         [SuppressMessage("Microsoft.Security", "CA2104:DoNotDeclareReadOnlyMutableReferenceTypes", Justification = "It is, in fact, immutable")]
-        protected static readonly StringComparer Comparer = StringComparer.OrdinalIgnoreCase;
+        internal static readonly StringComparer Comparer = StringComparer.OrdinalIgnoreCase;
 
         internal AnyPath(string path)
         {
@@ -106,7 +106,24 @@ namespace Pathy
         /// </summary>
         /// <returns>The path.</returns>
         public sealed override string ToString() => RawPath;
-        
+
+        /// <summary>
+        /// Formats the path as a string.
+        /// </summary>
+        /// <example>
+        ///     <code>
+        ///     var path = AnyPath.From(@"C:\path\to\a\file.txt");
+        ///     var formatted = $"{path:20}";
+        ///     </code>
+        /// This results in <c>C:\...\file.txt</c>.
+        /// </example>
+        /// <param name="format">
+        ///     The format string. Currently this can be a number, which
+        ///     indicates how long the resulting string can be. If the path
+        ///     is longer, it will be truncated and ellipses ("...") inserted.
+        /// </param>
+        /// <param name="formatProvider">A format provider. This is not used.</param>
+        /// <returns>The path formatted per the format string.</returns>
         public string ToString(string format, IFormatProvider formatProvider)
         {
             if (string.IsNullOrWhiteSpace(format))

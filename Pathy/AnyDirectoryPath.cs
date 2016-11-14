@@ -8,7 +8,7 @@ using System.Security.AccessControl;
 namespace Pathy
 {
     /// <summary>
-    /// Represents a relative or absolute directory path.
+    /// Represents an absolute or relative path to a directory.
     /// </summary>
     public class AnyDirectoryPath : AnyPath
     {
@@ -25,6 +25,11 @@ namespace Pathy
             Invariant();
         }
 
+        /// <summary>
+        /// Creates a <see cref="AnyDirectoryPath"/> from a base directory path and a relative directory path.
+        /// </summary>
+        /// <param name="basePath">The base directory path.</param>
+        /// <param name="relativePath">The relative directory path.</param>
         public AnyDirectoryPath(AnyDirectoryPath basePath, RelativeDirectoryPath relativePath)
             : base(Combined(basePath, relativePath))
         {
@@ -32,12 +37,12 @@ namespace Pathy
         }
 
         /// <summary>
-        /// Creates a <see cref="AnyDirectoryPath"/> from the given directory path.
+        /// Creates a <see cref="AnyDirectoryPath"/> from the given raw path.
         /// </summary>
-        /// <param name="directoryPath">The directory path to use.</param>
-        /// <exception cref="ArgumentNullException"><paramref name="directoryPath"/> is <c>null</c>.</exception>
-        /// <exception cref="ArgumentException"><paramref name="directoryPath"/> contains invalid characters.</exception>
-        /// <returns>An instance of <see cref="AnyDirectoryPath"/>.</returns>
+        /// <param name="directoryPath">The path.</param>
+        /// <exception cref="ArgumentNullException">The <paramref name="directoryPath"/> was <c>null</c>.</exception>
+        /// <exception cref="ArgumentException">There was a problem with the given path.</exception>
+        /// <returns>A new <see cref="AnyDirectoryPath"/> instance.</returns>
         public static new AnyDirectoryPath From(string directoryPath)
         {
             Validation.CheckPath(directoryPath, nameof(directoryPath), Validations.Default);
@@ -64,14 +69,25 @@ namespace Pathy
             // so we can have consistent comparison
             return basePath.IsAbsolute ? Path.GetFullPath(result) : result;
         }
-        
+
+        /// <summary>
+        /// Creates a <see cref="AnyFilePath"/> from a base directory path and a relative file path.
+        /// </summary>
+        /// <param name="basePath">The base directory path.</param>
+        /// <param name="relativePath">The relative file path.</param>
+        /// <returns></returns>
         [SuppressMessage("Microsoft.Usage", "CA2225:OperatorOverloadsHaveNamedAlternates", Justification = "Alternate is provided as constructor")]
         public static AnyFilePath operator/(AnyDirectoryPath basePath, RelativeFilePath relativePath) =>
             new AnyFilePath(basePath, relativePath);
 
+        /// <summary>
+        /// Creates a <see cref="AnyDirectoryPath"/> from a base directory path and a relative directory path.
+        /// </summary>
+        /// <param name="basePath">The base directory path.</param>
+        /// <param name="relativePath">The relative file path.</param>
         [SuppressMessage("Microsoft.Usage", "CA2225:OperatorOverloadsHaveNamedAlternates", Justification = "Alternate is provided as constructor")]
-        public static AnyDirectoryPath operator/(AnyDirectoryPath basePath, RelativeDirectoryPath file) =>
-            new AnyDirectoryPath(basePath, file);
+        public static AnyDirectoryPath operator/(AnyDirectoryPath basePath, RelativeDirectoryPath relativePath) =>
+            new AnyDirectoryPath(basePath, relativePath);
 
         /// <summary>
         /// Creates the directory (including any parent directories), 
@@ -79,8 +95,15 @@ namespace Pathy
         /// </summary>
         public void Create() => Directory.CreateDirectory(RawPath);
 
+        /// <summary>
+        /// Deletes the directory and its contents.
+        /// </summary>
         public void Delete() => Directory.Delete(RawPath, true);
         
+        /// <summary>
+        /// Deletes the directory, and optionally its contents.
+        /// </summary>
+        /// <param name="recursive">If <c>true</c>, delete the directory contents.</param>
         public void Delete(bool recursive) => Directory.Delete(RawPath, recursive);
         
         /// <summary>
