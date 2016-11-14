@@ -46,7 +46,13 @@ namespace Pathy
         /// </summary>
         public DirectoryPath Directory =>
             new DirectoryPath(Path.GetDirectoryName(RawPath));
-        
+
+        public new FilePath WithExtension(string extension) =>
+            new FilePath(Path.ChangeExtension(RawPath, extension));
+
+        public new FilePath WithoutExtension() =>
+            new FilePath(Path.ChangeExtension(RawPath, null));
+
         public sealed override bool Equals(object obj) => Equals(obj as FilePath);
 
         public sealed override int GetHashCode() =>

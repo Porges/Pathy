@@ -51,6 +51,8 @@ namespace Pathy
             // so we can have consistent comparison
             return basePath.IsAbsolute ? Path.GetFullPath(result) : result;
         }
+
+        public string Extension => Path.GetExtension(RawPath);
         
         public AnyFilePath WithExtension(string extension) =>
             new AnyFilePath(Path.ChangeExtension(RawPath, extension));

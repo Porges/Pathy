@@ -28,5 +28,11 @@ namespace Pathy
 
             return new FileName(fileName);
         }
+
+        public new FileName WithExtension(string extension) =>
+            new FileName(Path.ChangeExtension(RawPath, extension));
+
+        public new FileName WithoutExtension() =>
+            new FileName(Path.ChangeExtension(RawPath, null));
     }
 }

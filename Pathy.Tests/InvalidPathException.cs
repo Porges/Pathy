@@ -11,7 +11,7 @@ namespace Pathy.Tests
 {
     public class Exceptions
     {
-        private T RoundTrip<T>(T it)
+        private static T RoundTrip<T>(T it)
         {
             var formatter = new BinaryFormatter();
 
@@ -49,6 +49,14 @@ namespace Pathy.Tests
 
             Assert.Equal(ex.Message, roundTripped.Message);
             Assert.Equal(ex.InnerException?.Message, roundTripped.InnerException?.Message);
+        }
+
+        [Fact]
+        public void MessageContainsCharacterDetails()
+        {
+            var ex = Assert.Throws<InvalidPathException>(() => AnyPath.From("|"));
+            Assert.Contains("\'|\'", ex.Message);
+            Assert.Contains("(U+007C)", ex.Message);
         }
     }
 }

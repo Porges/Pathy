@@ -18,8 +18,8 @@ namespace Pathy
             Invariant();
         }
 
-        public RelativeFilePath(RelativeDirectoryPath path, RelativeFilePath fileName)
-            : base(path, fileName)
+        public RelativeFilePath(RelativeDirectoryPath basePath, RelativeFilePath relativePath)
+            : base(basePath, relativePath)
         {
             Invariant();
         }
@@ -35,7 +35,13 @@ namespace Pathy
         /// <remarks>This is always <c>false</c>.</remarks>
         public sealed override bool IsAbsolute => false;
 
-        public sealed override bool Equals(object obj) => Equals(obj as FilePath);
+        public new RelativeFilePath WithExtension(string extension) =>
+            new RelativeFilePath(Path.ChangeExtension(RawPath, extension));
+
+        public new RelativeFilePath WithoutExtension() =>
+            new RelativeFilePath(Path.ChangeExtension(RawPath, null));
+
+        public sealed override bool Equals(object obj) => Equals(obj as RelativeFilePath);
 
         public sealed override int GetHashCode() =>
             Comparer.GetHashCode(RawPath);

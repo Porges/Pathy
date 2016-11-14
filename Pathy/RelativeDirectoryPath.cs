@@ -6,7 +6,7 @@ using System.IO;
 
 namespace Pathy
 {
-    public class RelativeDirectoryPath : AnyDirectoryPath
+    public class RelativeDirectoryPath : AnyDirectoryPath, IEquatable<RelativeDirectoryPath>, IComparable<RelativeDirectoryPath>
     {
         [Conditional(BuildType.Debug)]
         private void Invariant()
@@ -66,5 +66,34 @@ namespace Pathy
                 yield return new RelativeDirectoryPath(dir);
             }
         }
+
+        public sealed override bool Equals(object obj) => Equals(obj as RelativeDirectoryPath);
+
+        public sealed override int GetHashCode() =>
+            Comparer.GetHashCode(RawPath);
+
+        public bool Equals(RelativeDirectoryPath other) =>
+            Comparer.Equals(RawPath, other?.RawPath);
+
+        public int CompareTo(RelativeDirectoryPath other) =>
+            Comparer.Compare(RawPath, other?.RawPath);
+
+        public static bool operator ==(RelativeDirectoryPath left, RelativeDirectoryPath right) =>
+            Comparer.Compare(left?.RawPath, right?.RawPath) == 0;
+
+        public static bool operator !=(RelativeDirectoryPath left, RelativeDirectoryPath right) =>
+            Comparer.Compare(left?.RawPath, right?.RawPath) != 0;
+
+        public static bool operator >(RelativeDirectoryPath left, RelativeDirectoryPath right) =>
+            Comparer.Compare(left?.RawPath, right?.RawPath) > 0;
+
+        public static bool operator <(RelativeDirectoryPath left, RelativeDirectoryPath right) =>
+            Comparer.Compare(left?.RawPath, right?.RawPath) < 0;
+
+        public static bool operator >=(RelativeDirectoryPath left, RelativeDirectoryPath right) =>
+            Comparer.Compare(left?.RawPath, right?.RawPath) >= 0;
+
+        public static bool operator <=(RelativeDirectoryPath left, RelativeDirectoryPath right) =>
+            Comparer.Compare(left?.RawPath, right?.RawPath) <= 0;
     }
 }

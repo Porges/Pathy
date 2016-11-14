@@ -9,7 +9,7 @@ namespace Pathy
     public class InvalidPathException : ArgumentException
     {
         private static string FormatMessage(char c) =>
-            Invariant($"Path contains invalid character: '{c}' (U+{c:X4})");
+            Invariant($"Path contains invalid character: '{c}' (U+{(int)c:X4})");
 
         public InvalidPathException()
             : base("Path contains invalid character")
