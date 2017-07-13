@@ -48,7 +48,8 @@
     <Compile Include="AnyDirectoryPath.cs" />
     <Compile Include="AnyFilePath.cs" />
     <Compile Include="AnyPath.cs" />
-    <Compile Include="BuildType.cs" />
+    <Compile Include="Builder.cs" />
+    <Compile Include="Internal\BuildType.cs" />
     <Compile Include="DirectoryPath.cs" />
     <Compile Include="FileName.cs" />
     <Compile Include="FilePath.cs" />
@@ -61,7 +62,7 @@
     <Compile Include="SafeNativeMethods.cs" />
     <Compile Include="TemporaryDirectory.cs" />
     <Compile Include="TemporaryFile.cs" />
-    <Compile Include="Validation.cs" />
+    <Compile Include="Internal\Validation.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

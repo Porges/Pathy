@@ -2,6 +2,7 @@
 using System.Diagnostics;
 using System.IO;
 using System.Text;
+using Pathy.Internal;
 
 namespace Pathy
 {
@@ -33,6 +34,11 @@ namespace Pathy
         {
             Invariant();
         }
+
+        /// <summary>
+        /// Returns <c>true</c> if the file exists.
+        /// </summary>
+        public bool Exists() => File.Exists(RawPath);
 
         /// <summary>
         /// Creates a <see cref="AnyFilePath"/> from the given raw path.

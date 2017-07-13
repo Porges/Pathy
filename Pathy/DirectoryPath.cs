@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
+using Pathy.Internal;
 
 namespace Pathy
 {
@@ -69,6 +70,17 @@ namespace Pathy
         /// </summary>
         /// <returns>The current working directory.</returns>
         public static DirectoryPath Current() => new DirectoryPath(Directory.GetCurrentDirectory());
+
+        /// <summary>
+        /// Creates a <see cref="FilePath"/> from a base directory path and a relative file path as a string.
+        /// </summary>
+        /// <remarks>This assumes that the relative part is a valid path. It is less safe.</remarks>
+        /// <param name="basePath">The base directory path.</param>
+        /// <param name="relativePath">The relative file path.</param>
+        /// <returns></returns>
+        [SuppressMessage("Microsoft.Usage", "CA2225:OperatorOverloadsHaveNamedAlternates", Justification = "Alternate is provided as constructor")]
+        public static FilePath operator /(DirectoryPath basePath, string relativePath) =>
+            new FilePath(basePath, RelativeFilePath.From(relativePath));
 
         /// <summary>
         /// Creates a <see cref="FilePath"/> from a base directory path and a relative file path.

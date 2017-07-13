@@ -1,7 +1,7 @@
 ﻿using System;
 using System.IO;
 
-namespace Pathy
+namespace Pathy.Internal
 {
     [Flags]
     internal enum Validations

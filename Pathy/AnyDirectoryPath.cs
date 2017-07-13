@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Security.AccessControl;
+using Pathy.Internal;
 
 namespace Pathy
 {

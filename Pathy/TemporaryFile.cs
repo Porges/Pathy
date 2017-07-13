@@ -16,9 +16,6 @@ namespace Pathy
         /// <summary>
         /// Deletes the temporary file.
         /// </summary>
-        public void Dispose()
-        {
-            File.Delete();
-        }
+        public void Dispose() => File.Delete();
     }
 }
