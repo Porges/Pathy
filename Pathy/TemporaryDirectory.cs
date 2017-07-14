@@ -17,6 +17,16 @@ namespace Pathy
         /// <summary>
         /// Deletes the temporary directory (including its contents).
         /// </summary>
-        public void Dispose() => Directory.Delete();
+        public void Dispose()
+        {
+            try
+            {
+                Directory.Delete();
+            }
+            catch (System.IO.DirectoryNotFoundException)
+            {
+                // uh, good?
+            }
+        }
     }
 }
